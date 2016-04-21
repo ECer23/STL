@@ -31,7 +31,7 @@
 #ifndef __SGI_STL_INTERNAL_CONSTRUCT_H
 #define __SGI_STL_INTERNAL_CONSTRUCT_H
 
-#include <new.h>
+#include <new.h>  // for placement new
 
 __STL_BEGIN_NAMESPACE
 
@@ -45,7 +45,7 @@ __STL_BEGIN_NAMESPACE
 
 template <class _T1, class _T2>
 inline void _Construct(_T1* __p, const _T2& __value) {
-  new ((void*) __p) _T1(__value);
+  new ((void*) __p) _T1(__value);  // it does not allocate memory but creat an object on __p; and it calls T1::T1(__value);
 }
 
 template <class _T1>
@@ -55,7 +55,7 @@ inline void _Construct(_T1* __p) {
 
 template <class _Tp>
 inline void _Destroy(_Tp* __pointer) {
-  __pointer->~_Tp();
+  __pointer->~_Tp();  // calls destory
 }
 
 template <class _ForwardIterator>
@@ -66,11 +66,11 @@ __destroy_aux(_ForwardIterator __first, _ForwardIterator __last, __false_type)
     destroy(&*__first);
 }
 
-template <class _ForwardIterator> 
+template <class _ForwardIterator>
 inline void __destroy_aux(_ForwardIterator, _ForwardIterator, __true_type) {}
 
 template <class _ForwardIterator, class _Tp>
-inline void 
+inline void
 __destroy(_ForwardIterator __first, _ForwardIterator __last, _Tp*)
 {
   typedef typename __type_traits<_Tp>::has_trivial_destructor
