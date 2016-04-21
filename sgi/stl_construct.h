@@ -53,15 +53,14 @@ inline void _Construct(_T1* __p) {
   new ((void*) __p) _T1();
 }
 
+// version 1 of destroy(), reciving one pointer
 template <class _Tp>
 inline void _Destroy(_Tp* __pointer) {
-  __pointer->~_Tp();  // calls destory
+  __pointer->~_Tp();  // calls ~T()
 }
 
 template <class _ForwardIterator>
-void
-__destroy_aux(_ForwardIterator __first, _ForwardIterator __last, __false_type)
-{
+void __destroy_aux(_ForwardIterator __first, _ForwardIterator __last, __false_type) {
   for ( ; __first != __last; ++__first)
     destroy(&*__first);
 }
@@ -78,6 +77,8 @@ __destroy(_ForwardIterator __first, _ForwardIterator __last, _Tp*)
   __destroy_aux(__first, __last, _Trivial_destructor());
 }
 
+// version 2 of destroy(), reciving 2 iteraators. this function trys to find out value type of element.
+// Then we can make use of __type_traits to get the best approach
 template <class _ForwardIterator>
 inline void _Destroy(_ForwardIterator __first, _ForwardIterator __last) {
   __destroy(__first, __last, __VALUE_TYPE(__first));
