@@ -11,7 +11,7 @@ This macro with functional form returns the offset value in bytes of member memb
 `std::cerr`对应标准错误流，用于显示错误消息。默认情况下被关联到标准输出流，但它不被缓冲，也就说错误消息可以直接发送到显示器，而无需等到缓冲区或者新的换行符时，才被显示。一般情况下不被重定向。
 
 
-### void*
+### `void*`
 
 void指针可以指向任意类型的数据，就是说可以用任意类型的指针对void指针对void指针赋值。如果要将void指针p赋给其他类型的指针，则需要强制类型转换，就本例而言：`a=（int *）p`
 
@@ -32,7 +32,7 @@ The value of the current new-handler function if this has already been set by th
 3. 返回对象的指针
 
 
-### iterator
+### `iterator`
 `Input Iterator`：只能单步向前迭代元素，不允许修改由该类迭代器引用的元素。
 `Output Iterator`：该类迭代器和`Input Iterator`极其相似，也只能单步向前迭代元素，不同的是该类迭代器对元素只有写的权力。
 `Forward Iterator`：该类迭代器可以在一个正确的区间中进行读写操作，它拥有Input Iterator的所有特性，和`Output Iterator`的部分特性，以及单步向前迭代元素的能力。
@@ -55,7 +55,7 @@ does not allocate memory -- calls: operator new (sizeof(MyClass),p2)
 but constructs an object at p2
 
 
-### Iterator traits
+### `Iterator traits`
 Traits class defining properties of iterators.
 member	description
 difference_type	Type to express the result of subtracting one iterator from another.
@@ -106,6 +106,6 @@ random_access_iterator_tag
 
 
 
-### type traits
+### `type traits`
 在STL中为了提供通用的操作而又不损失效率，我们用到了一种特殊的技巧，叫traits编程技巧。具体的来说，traits就是通过定义一些结构体或类，并利用模板类特化和偏特化的能力，给类型赋予一些特性，这些特性根据类型的不同而异。在程序设计中可以使用这些traits来判断一个类型的一些特性，引发C++的函数重载机制，实现同一种操作因类型不同而异的效果。traits的编程技巧极度弥补了C++语言的不足 。
 (还是没有搞太懂...[reference from cplusplus](http://www.cplusplus.com/reference/type_traits/)
