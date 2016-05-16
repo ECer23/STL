@@ -7,7 +7,8 @@ Folder called rewrite includes some codes wriiten by myself when I'm learning ST
 
 ### Reading dialouge
 
-2016/4/21 [STL_allocator note](https://github.com/ECer23/stl/issues/1) wriiten in chinese   
+2015/5/16 [Memory pool---something about allocator](https://github.com/ECer23/stl/issues/3)  
+2016/5/16 (updated) [STL_allocator note](https://github.com/ECer23/stl/issues/1) wriiten in chinese   
 2016/4/21 [Reference](https://github.com/ECer23/stl/issues/2) wriiten in both Chinese and English  
 Wikipedia [Standard Template Library](https://en.wikipedia.org/wiki/Standard_Template_Library)  
 sgi Official website [sgi Official website](https://www.sgi.com/tech/stl/download.html)  
