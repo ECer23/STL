@@ -1,14 +1,14 @@
 #ifndef STR_VEC_H
 #define STR_VEC_H
 
-#include <string>
-#include <memory>
 #include <exception>
 #include <initializer_list>
+#include <memory>
+#include <string>
 using namespace std;
 
 class strVector {
- public:
+public:
   strVector();
   ~strVector();
 
@@ -20,26 +20,22 @@ class strVector {
   string *begin() const;
   string *end() const;
 
- private:
-  // check if strVector::reallocate() is needed 
+private:
   void check_alloc();
-  // move (*this) to a new bigger space
-  void alloc_n_move(size_t);
-  // destory() and deallocate()
+  void alloc_n_move(size_t new_cap);
   void free();
-
-  allocator<string> alloc;
 
   /* [ 0 ][ 1 ][ 2 ][ 3 ][  unconstructed   ]
       ^                   ^                 ^
   elements           first_free            cap */
-  string *elements, *first_free, *cap;
-
+  string *elements;
+  string *first_free;
+  string *cap;
+  allocator<string> alloc;
   /* [ 0 ][ 1 ][ 2 ][ 3 ][   unconstructed   ]
                           ^                  ^
                         old_cap            new_cap */
-  // allocate more memeory when needed
   void reallocate();
 };
 
-#endif  // !STR_VEC_H
+#endif // !STR_VEC_H
