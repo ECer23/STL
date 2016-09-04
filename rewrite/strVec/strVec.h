@@ -4,12 +4,13 @@
 #include <string>
 #include <memory>
 #include <exception>
-#include <initializer_list>
 using namespace std;
 
 class strVector {
  public:
   strVector();
+  strVector(strVector &) noexcept;
+  strVector(strVector &&) noexcept;
   ~strVector();
 
   void push_back(const string &);
@@ -20,11 +21,16 @@ class strVector {
   string *begin() const;
   string *end() const;
 
+  strVector &operator=(const strVector &);
+  strVector &operator=(strVector &&) noexcept;
+
  private:
-  // check if strVector::reallocate() is needed 
+  // check if strVector::reallocate() is needed
   void check_alloc();
   // move (*this) to a new bigger space
   void alloc_n_move(size_t);
+  // tool function, used by copy constructor, assign operator
+  pair<string *, string *> alloc_n_copy(const string *, const string *);
   // destory() and deallocate()
   void free();
 

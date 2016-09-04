@@ -3,7 +3,38 @@
 
 strVector::strVector() { elements = first_free = cap = nullptr; }
 
+strVector::strVector(strVector& rhs) noexcept {
+  auto data = alloc_n_copy(rhs.begin(), rhs.end());
+  elements = data.first;
+  first_free = cap = data.second;
+}
+
+strVector::strVector(strVector&& s) noexcept : elements(s.elements),
+                                               first_free(s.first_free),
+                                               cap(s.cap) {
+  s.elements = s.first_free = s.cap = nullptr;
+}
+
 strVector::~strVector() { free(); }
+
+strVector& strVector::operator=(const strVector& rhs) {
+  auto data = alloc_n_copy(rhs.begin(), rhs.end());
+  free();
+  elements = data.first;
+  first_free = cap = data.second;
+  return *this;
+}
+
+strVector& strVector::operator=(strVector&& rhs) noexcept {
+  if (this != &rhs) {
+    free();
+    elements = rhs.elements;
+    first_free = rhs.first_free;
+    cap = rhs.cap;
+    rhs.elements = rhs.first_free = rhs.cap = nullptr;
+  }
+  return *this;
+}
 
 void strVector::push_back(const string& s) {
   check_alloc();
@@ -44,6 +75,12 @@ void strVector::alloc_n_move(size_t new_cap) {
   first_free = dest;
   elements = newdata;
   cap = elements + new_cap;
+}
+
+pair<string*, string*> strVector::alloc_n_copy(const string* b,
+                                               const string* e) {
+  auto data = alloc.allocate(e - b);
+  return {data, uninitialized_copy(b, e, data)};
 }
 
 void strVector::free() {
