@@ -1,10 +1,9 @@
-#include "querytext.h"
+#include "queryText.h"
 #include "strVec.h"
-// #include "vld.h"
 #include <iostream>
 using namespace std;
 
-void runQueries(ifstream &infile) {
+void runQueries(ifstream& infile) {
   TextQuery tq(infile);
   string word;
   cout << "Please enter the word you want to query" << endl;
