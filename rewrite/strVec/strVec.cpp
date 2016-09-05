@@ -54,15 +54,12 @@ void strVector::pop_back() {
 size_t strVector::size() const { return size_t(first_free - elements); }
 
 void strVector::resize(size_t n, string val) {
-  if (capacity() > n) {
-    while (n--) {
-      alloc.construct(first_free++, val);
-    }
+  if (size() < n) {
+    if (capacity() < n) reserve(n);
+    auto t = n - size();
+    while (t--) alloc.construct(first_free++, val);
   } else {
-    this->reallocate();
-    while (n--) {
-      alloc.construct(first_free++, val);
-    }
+    throw length_error("bad resize");
   }
 }
 
@@ -72,6 +69,8 @@ void strVector::reserve(size_t n) {
   if (capacity() < n) {
     auto newcapacity = n;
     alloc_n_move(newcapacity);
+  } else {
+    throw length_error("bad reserve");
   }
 }
 
