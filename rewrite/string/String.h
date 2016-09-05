@@ -1,49 +1,53 @@
-#ifndef STR_VEC_H
-#define STR_VEC_H
+#ifndef STRING_H
+#define STRING_H
 
-#include <string>
+#include <iostream>
 #include <memory>
 #include <exception>
 using namespace std;
 
-class strVector {
+class String {
+friend ostream& operator << (ostream&, String s);
  public:
-  strVector();
-  strVector(strVector &) noexcept;
-  strVector(strVector &&) noexcept;
-  ~strVector();
+  String();
+  String(const char *);
+  String(String &) noexcept;
+  String(String &&) noexcept;
+  ~String();
 
-  void push_back(const string &);
+  void push_back(const char &);
   void pop_back();
 
   size_t size() const;
-  void resize(size_t, string = string());
+  void resize(size_t, const char & = char());
 
   size_t capacity() const;
   void reserve(size_t);
 
-  string *begin() const;
-  string *end() const;
+  char *begin() const;
+  char *end() const;
 
-  strVector &operator=(const strVector &);
-  strVector &operator=(strVector &&) noexcept;
+  String operator+(const String &);
+  String &operator+=(const String &);
+  String &operator=(const String &);
+  String &operator=(String &&) noexcept;
 
  private:
-  // check if strVector::reallocate() is needed
+  // check if Stri id check_alloc();
   void check_alloc();
   // move (*this) to a new bigger space
   void alloc_n_move(size_t);
   // tool function, used by copy constructor, assign operator
-  pair<string *, string *> alloc_n_copy(const string *, const string *);
+  pair<char *, char *> alloc_n_copy(const char *, const char *);
   // destory() and deallocate()
   void free();
 
-  allocator<string> alloc;
+  allocator<char> alloc;
 
   /* [ 0 ][ 1 ][ 2 ][ 3 ][  unconstructed   ]
       ^                   ^                 ^
   elements           first_free            cap */
-  string *elements, *first_free, *cap;
+  char *elements, *first_free, *cap;
 
   /* [ 0 ][ 1 ][ 2 ][ 3 ][   unconstructed   ]
                           ^                  ^
@@ -52,4 +56,4 @@ class strVector {
   void reallocate();
 };
 
-#endif  // !STR_VEC_H
+#endif  // !STRING_H

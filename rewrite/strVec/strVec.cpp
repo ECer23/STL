@@ -18,10 +18,12 @@ strVector::strVector(strVector&& s) noexcept : elements(s.elements),
 strVector::~strVector() { free(); }
 
 strVector& strVector::operator=(const strVector& rhs) {
-  auto data = alloc_n_copy(rhs.begin(), rhs.end());
-  free();
-  elements = data.first;
-  first_free = cap = data.second;
+  if (this != &rhs) {
+    auto data = alloc_n_copy(rhs.begin(), rhs.end());
+    free();
+    elements = data.first;
+    first_free = cap = data.second;
+  }
   return *this;
 }
 
@@ -50,7 +52,29 @@ void strVector::pop_back() {
 }
 
 size_t strVector::size() const { return size_t(first_free - elements); }
+
+void strVector::resize(size_t n, string val) {
+  if (capacity() > n) {
+    while (n--) {
+      alloc.construct(first_free++, val);
+    }
+  } else {
+    this->reallocate();
+    while (n--) {
+      alloc.construct(first_free++, val);
+    }
+  }
+}
+
 size_t strVector::capacity() const { return size_t(cap - elements); }
+
+void strVector::reserve(size_t n) {
+  if (capacity() < n) {
+    auto newcapacity = n;
+    alloc_n_move(newcapacity);
+  }
+}
+
 string* strVector::begin() const { return elements; }
 string* strVector::end() const { return first_free; }
 
