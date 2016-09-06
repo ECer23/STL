@@ -27,7 +27,7 @@ friend ostream& operator << (ostream&, String s);
   char *begin() const;
   char *end() const;
 
-  String operator+(const String &);
+  friend String operator+(const String &, const String &);
   String &operator+=(const String &);
   String &operator=(const String &);
   String &operator=(String &&) noexcept;

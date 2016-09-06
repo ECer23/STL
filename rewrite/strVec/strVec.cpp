@@ -48,7 +48,7 @@ void strVector::pop_back() {
     throw out_of_range("pop on empty strVec");
   } else {
     alloc.destroy(first_free--);
-  }
+  } 
 }
 
 size_t strVector::size() const { return size_t(first_free - elements); }
@@ -59,7 +59,7 @@ void strVector::resize(size_t n, string val) {
     auto t = n - size();
     while (t--) alloc.construct(first_free++, val);
   } else {
-    throw length_error("bad resize");
+
   }
 }
 

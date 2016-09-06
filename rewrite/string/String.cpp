@@ -29,9 +29,9 @@ String::String(String&& s) noexcept : elements(s.elements),
 
 String::~String() { free(); }
 
-String String::operator+(const String& s) {
-  String temp = *this;
-  for (auto e : s) temp.push_back(e);
+String operator+(const String& s1, const String& s2) {
+  String temp = s1;
+  for (auto e : s2) temp.push_back(e);
   return temp;
 }
 

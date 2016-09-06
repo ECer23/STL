@@ -34,9 +34,7 @@ class strVector {
   // move (*this) to a new bigger space
   void alloc_n_move(size_t);
   // tool function, used by copy constructor, assign operator
-  pair<string *, string *> alloc_n_copy(const string *, const string *);
-  // destory() and deallocate()
-  void free();
+  pair<string *, string *> alloc_n_copy(const string *void free();
 
   allocator<string> alloc;
 
