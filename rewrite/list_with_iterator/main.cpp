@@ -1,7 +1,7 @@
 #include "myList.h"
 #include <iostream>
 #include <string>
-#include <vld.h>
+// #include <vld.h>
 using namespace std;
 
 int main() {
@@ -9,7 +9,7 @@ int main() {
   cout << "test size" << endl;
   cout << li.size() << endl;
   cout << (li.empty() ? "empty" : "not empty") << endl;
-  int n; // n >= 3
+  int n;  // n >= 3
   cout << "test push and pop" << endl;
   li.push_back(1);
   cout << li << endl;
