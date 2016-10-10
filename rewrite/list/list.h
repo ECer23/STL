@@ -192,6 +192,33 @@ class list {
     }
   }
 
+  /* Sort elements in container */
+  void sort() {
+    for (iterator i = begin(); i != end(); i++) {
+    }
+  }
+
+  /* Transfer elements from list to list  */
+  /* Transfer a list */
+  void splice(iterator position, list<T> &l) {
+    if (!l.empty()) transfer(position, l.begin(), l.end());
+  }
+  /* Transfer an element on i */
+  void splice(iterator position, list<T> &, iterator i) {
+    iterator j = i;
+    j++;
+    if (position == i || position == j)
+      return;
+    else
+      transfer(position, i, j);
+  }
+  /* Transfer some elements in a list from i to j */
+  void splice(iterator position, list<T> &, iterator first, iterator last) {
+    if (first != last) {
+      transfer(position, first, last);
+    }
+  }
+
  protected:
   /****************************** Memory access *****************************/
 
@@ -221,6 +248,19 @@ class list {
       n++;
     }
     return n;
+  }
+  /* Transfer elements in [first,last) to position */
+  void transfer(iterator position, iterator first, iterator last) {
+    if (position != last) {
+      link_type tmp = last->prev;
+      first->prev->next = last;
+      last->prev = first->prev;
+
+      first->prev = position->prev;
+      tmp->next = position;
+      first->prev->next = first;
+      position->prev = tmp;
+    }
   }
   /* Creat an empty list with an empty node */
   void empty_initialize() {
